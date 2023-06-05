@@ -7,7 +7,8 @@ import (
 )
 
 func TestNextToken(t *testing.T) {
-	input := `let five = 5;
+	input := `
+let five = 5;
 let ten = 10;
 let two_and_half = 2.5;
 

@@ -1,6 +1,12 @@
 use anyhow::Result;
+use std::io;
+
+use interpreter::repl::repl;
 
 fn main() -> Result<()> {
-    println!("Hello, world!");
+    let stdin = io::stdin();
+    let stdout = io::stdout();
+
+    repl(stdin, stdout)?;
     Ok(())
 }

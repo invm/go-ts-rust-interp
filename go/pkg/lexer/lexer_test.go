@@ -123,7 +123,7 @@ return false;
 		{token.SEMICOLON, ";"},
 	}
 
-	l := lexer.NewLexer(input)
+	l := lexer.New(input)
 
 	for i, tt := range tests {
 		tok := l.NextToken()

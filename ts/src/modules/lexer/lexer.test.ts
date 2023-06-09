@@ -38,6 +38,7 @@ test('test next token', function() {
     [Tokens.SEMICOLON, ";"],
     [Tokens.RBRACE, "}"],
     [Tokens.SEMICOLON, ";"],
+    [Tokens.EOF, "EOF"],
   ]
 
   const l = new Lexer(input)

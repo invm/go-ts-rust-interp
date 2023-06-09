@@ -5,47 +5,47 @@ export type Token = {
   literal: string;
 }
 
-export enum Tokens {
-  ILLEGAL = "ILLEGAL",
-  EOF = "EOF",
+export const Tokens = {
+  ILLEGAL: "ILLEGAL",
+  EOF: "EOF",
 
   // Identifiers + literals
-  IDENT = "IDENT", // add, foobar, x, y, ...
-  INT = "INT", // 1343456
-  FLOAT = "FLOAT",
+  IDENT: "IDENT", // add, foobar, x, y, ...
+  INT: "INT", // 1343456
+  FLOAT: "FLOAT",
 
   // Operators
-  ASSIGN = "=",
-  PLUS = "+",
-  MINUS = "-",
-  BANG = "!",
-  ASTERISK = "*",
-  SLASH = "/",
-  LT = "<",
-  GT = ">",
-  EQ = "==",
-  NOT_EQ = "!=",
-  COMMA = ",",
-  SEMICOLON = ";",
-  LPAREN = "(",
-  RPAREN = ")",
-  LBRACE = "{",
-  RBRACE = "}",
+  ASSIGN: "=",
+  PLUS: "+",
+  MINUS: "-",
+  BANG: "!",
+  ASTERISK: "*",
+  SLASH: "/",
+  LT: "<",
+  GT: ">",
+  EQ: "==",
+  NOT_EQ: "!=",
+  COMMA: ",",
+  SEMICOLON: ";",
+  LPAREN: "(",
+  RPAREN: ")",
+  LBRACE: "{",
+  RBRACE: "}",
 
   // Keywords
-  FUNCTION = "FUNCTION",
-  LET = "LET",
-  IF = "IF",
-  ELSE = "ELSE",
-  TRUE = "TRUE",
-  FALSE = "FALSE",
-  RETURN = "RETURN",
+  FUNCTION: "FUNCTION",
+  LET: "LET",
+  IF: "IF",
+  ELSE: "ELSE",
+  TRUE: "TRUE",
+  FALSE: "FALSE",
+  RETURN: "RETURN",
 
   // TODOS
-  LTE = "<",
-  GTE = ">",
-  ELSE_IF = "ELSE_IF",
-}
+  LTE: "<",
+  GTE: ">",
+  ELSE_IF: "ELSE_IF",
+} as const
 
 
 export const keywords: Record<string, TokenType> = {

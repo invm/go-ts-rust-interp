@@ -14,8 +14,8 @@ export class Lexer {
   }
 
   public readChar() {
-    if (this.readPosition > this.input.length) {
-      this.ch = 0
+    if (this.readPosition >= this.input.length) {
+      this.ch = "\0";
     } else {
       this.ch = this.input[this.readPosition]! // guaranteed to be here
     }
@@ -57,34 +57,42 @@ export class Lexer {
 
   public peekChar(): Char {
     if (this.readPosition >= this.input.length) {
-      return 0
+      return "\0";
     } else {
       return this.input[this.readPosition]!
     }
   }
 
+  newTwoCharToken(tokenType: TokenType): Token {
+    const ch = this.ch
+    this.readChar()
+    const literal = String(ch) + String(this.ch)
+    return { type: tokenType, literal: literal }
+  }
+
+
   public nextToken(): Token {
-    let tok: Token = { type: Tokens.EOF, literal: "" }
+    let tok: Token = { type: Tokens.EOF, literal: "EOF" }
 
     this.skipWhitespace()
 
     switch (this.ch) {
       case '=':
-        // if this.peekChar() == '=' {
-        //   tok = l.newTwoCharToken(Tokens.EQ)
-        // } else {
-        tok = newToken(Tokens.ASSIGN, this.ch)
-        // }
+        if (this.peekChar() == '=') {
+          tok = this.newTwoCharToken(Tokens.EQ)
+        } else {
+          tok = newToken(Tokens.ASSIGN, this.ch)
+        }
         break;
       case '-':
         tok = newToken(Tokens.MINUS, this.ch)
         break;
       case '!':
-        // if l.peekChar() == '=' {
-        //   tok = l.newTwoCharToken(Tokens.NOT_EQ)
-        // } else {
-        tok = newToken(Tokens.BANG, this.ch)
-        // }
+        if (this.peekChar() === '=') {
+          tok = this.newTwoCharToken(Tokens.NOT_EQ)
+        } else {
+          tok = newToken(Tokens.BANG, this.ch)
+        }
         break;
       case '/':
         tok = newToken(Tokens.SLASH, this.ch)
@@ -119,22 +127,21 @@ export class Lexer {
       case '}':
         tok = newToken(Tokens.RBRACE, this.ch)
         break;
-      case 0:
-        tok.literal = ""
+      case "\0":
+        tok.literal = "EOF"
         tok.type = Tokens.EOF
         break;
-      default:
-        if (isLetter(this.ch)) {
-          tok.literal = this.readIdentifier()
-          tok.type = LookupIdent(tok.literal)
-          return tok
-        } else if (isDigit(this.ch)) {
-          tok = this.readNumber()
-          return tok
-        } else {
-          tok = newToken(Tokens.ILLEGAL, this.ch)
-        }
+    }
 
+    if (isLetter(this.ch)) {
+      tok.literal = this.readIdentifier()
+      tok.type = LookupIdent(tok.literal)
+      return tok
+    } else if (isDigit(this.ch)) {
+      tok = this.readNumber()
+      return tok
+    } else if (!tok) {
+      return newToken(Tokens.ILLEGAL, this.ch)
     }
 
     this.readChar()
